@@ -80,10 +80,10 @@ lspconfig.ts_ls.setup {
     capabilities = capabilities,
 }
 
--- Example for Rust (using rust_analyzer)
-lspconfig.rust_analyzer.setup {
-    capabilities = capabilities,
-}
+-- -- Example for Rust (using rust_analyzer)
+-- lspconfig.rust_analyzer.setup {
+--     capabilities = capabilities,
+-- }
 
 -- HTML LSP (vscode-html-language-server)
 lspconfig.html.setup {
