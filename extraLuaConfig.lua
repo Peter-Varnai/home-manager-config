@@ -28,8 +28,8 @@ end)
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
-vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', opts)
-vim.keymap.set('n', '<C-q>', '<cmd> q <CR>', opts)
+-- vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', opts)
+-- vim.keymap.set('n', '<C-q>', '<cmd> q <CR>', opts)
 
 
 local function toggle_neotree()
@@ -68,7 +68,23 @@ cmp.setup({
         { name = 'luasnip' },  -- Snippet completions
     }, {
         { name = 'buffer' },   -- Buffer completions (words from the current file)
-    })
+    }),
+
+    mapping = cmp.mapping.preset.insert({
+        -- Confirm selection
+        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item
+
+        -- Navigate items in the list
+        ['<C-n>'] = cmp.mapping.select_next_item(), -- Next item
+        ['<C-p>'] = cmp.mapping.select_prev_item(), -- Previous item
+
+        -- Scroll docs (if available)
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+
+        -- Snippet expansion
+        ['<C-e>'] = cmp.mapping.abort(), -- Close completion window
+    }),
 })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -80,10 +96,18 @@ lspconfig.ts_ls.setup {
     capabilities = capabilities,
 }
 
--- -- Example for Rust (using rust_analyzer)
--- lspconfig.rust_analyzer.setup {
---     capabilities = capabilities,
--- }
+-- Example for Rust (using rust_analyzer)
+lspconfig.rust_analyzer.setup {
+    -- cmd = { "/home/nixos/.nix-profile/bin/rust-analyzer" },
+    capabilities = capabilities,
+    settings = {
+        ["rust-analyzer"] = {
+            checkOnSave = {
+                command = "clippy",
+            },
+        },
+    },
+}
 
 -- HTML LSP (vscode-html-language-server)
 lspconfig.html.setup {
@@ -104,3 +128,12 @@ lspconfig.lua_ls.setup {
     capabilities = capabilities,
 }
 
+-- GLSL configuration
+lspconfig.glsl_analyzer.setup {
+    capabilities = capabilities,
+    filetypes = { "glsl", "vert", "frag", "comp", "tesc", "tese", "geom" },
+}
+
+vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {})
+vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, {})
+vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, {})

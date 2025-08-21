@@ -4,7 +4,7 @@
   programs.neovim = 
   let
     toLua = str: "lua << EOF\n${str}\nEOF\n";
-    toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
+    # toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
   in
   {
     enable = true;
@@ -68,31 +68,6 @@
             p.tree-sitter-json
             p.tree-sitter-rust
           ]));
-
-          config = toLua ''
-            local function toggle_neotree()
-            if vim.bo.filetype == "neo-tree" then
-            require("neo-tree.command").execute({ action = "close" })
-            else
-            require("neo-tree.command").execute({ action = "focus", source = "filesystem" })
-            end
-            end
-
-            vim.keymap.set('n', '<M-1>', toggle_neotree, { noremap = true, silent = true })
-
-
-            require('nvim-web-devicons').setup()
-
-            require('neo-tree').setup({
-            close_if_last_window = true,
-            filesystem = {
-            filtered_items = {
-            show_hidden_count = true,
-            hide_dotfiles = false,
-            },
-            },
-            })
-          '';
         }
 
         {
@@ -114,9 +89,6 @@
         }
 
         telescope-fzf-native-nvim  
-        
-       # vim-nix
-
       ];
 
       #init.lua
@@ -124,5 +96,4 @@
         ${builtins.readFile ./extraLuaConfig.lua}
       '';
     };
-
   }

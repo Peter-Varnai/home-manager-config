@@ -1,8 +1,8 @@
 { config, pkgs, inputs, ... }:
 
 {
-  home.username = "nixos";
-  home.homeDirectory = "/home/nixos";
+  home.username = "peter";
+  home.homeDirectory = "/home/peter";
   home.stateVersion = "24.11";
 
   home.packages = with pkgs; [
@@ -12,15 +12,29 @@
     ripgrep
     git
     tree-sitter
-    cargo
-    rust-analyzer
+    # cargo
+    # rust-analyzer
+    clang
+    rustup
+    cargo-watch
     xsel
     nil
+    jq
+    zip
+    pkg-config
+    
+    # node packages
     nodejs_23
+    # nodePackages.gltf-pipeline
+
+
+    # apacheKafka_3_7
+
      # Nerd Fonts (specific fonts for development)
     nerd-fonts.fira-code
     nerd-fonts.hack
     nerd-fonts.jetbrains-mono
+
     # nerd-fonts.source-code-pro
     nerd-fonts.droid-sans-mono
     nerd-fonts.dejavu-sans-mono
@@ -30,8 +44,11 @@
     #lsp packagdes
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
-    rust-analyzer
+    # rust-analyzer
     lua-language-server
+    glslang
+    glsl_analyzer
+
   ]; 
 
   nixpkgs = {

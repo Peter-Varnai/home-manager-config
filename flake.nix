@@ -20,7 +20,7 @@
     };
   in {
 
-    homeConfigurations."nixos" = 
+    homeConfigurations."peter" = 
       inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
 
